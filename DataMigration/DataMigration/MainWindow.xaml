@@ -1,0 +1,29 @@
+﻿<Window x:Class="DataMigration.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="数据移植" Height="600" Width="800">
+    <Grid>
+        <StackPanel>
+            <DataGrid  Name="dg_main" Width="780" Height="300" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="产品号" Binding="{Binding Path=prdt_no}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="产品分类" Binding="{Binding Path=Cbase.prdt_type}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="产品种类" Binding="{Binding Path=Cbase.prdt_knd}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="开始日期" Binding="{Binding Path=Cbase.beg_date}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="结束日期" Binding="{Binding Path=Cbase.end_date}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="客户类型" Binding="{Binding Path=Cbase.cif_type}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="周期" Binding="{Binding Path=Cbase.term}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="周期类型" Binding="{Binding Path=Cbase.term_type}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="产品状态" Binding="{Binding Path=Cbase.prdt_sts}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="核算子产品" Binding="{Binding Path=Cbase.prdt_ind}"></DataGridTextColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+            <Button   Width="75" Click="Button_Click" Content="搜索"/>
+            <Button  Name="Btn_modify" Width="75" Click="Btn_modify_Click" Content="修改"/>
+            <Button  Name="Btn_sync" Width="75" Click="Btn_sync_Click" Content="同步"/>
+        </StackPanel>
+
+
+    </Grid>
+</Window>

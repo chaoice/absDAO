@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <PrdtDe maintable="DD_PARM" type="menu">
+    <!--DE_BASE_PARM-->
+    <PRDT_NO propertypath="prdt_no" sourcecolumn="PRDT_NO" rule="auto(1000)"></PRDT_NO>
+    <PRDT_TYPE propertypath="Cbase.prdt_type" default="1"></PRDT_TYPE>
+    <PRDT_KND ></PRDT_KND>
+    <BEG_DATE sourcetable="DD_PARM" sourcecolumn="BEG_DATE" sourcekey="PRDT_NO" mainkey="PRDT_NO" ></BEG_DATE>
+    <END_DATE sourcecolumn="END_DATE"></END_DATE>
+    <CIF_TYPE sourcecolumn="CIF_TYPE"></CIF_TYPE>
+    <TERM_TYPE default="-"></TERM_TYPE>
+    <TERM default="-1"></TERM>
+    <PRDT_STS default="0"></PRDT_STS>
+    <PRDT_IND></PRDT_IND>
+    
+    <!-->DE_RATE_PARM-->
+    <RATE_TYPE default="D"></RATE_TYPE>
+    <RATE_CHG_TYPE default="0"></RATE_CHG_TYPE>
+    <RATE_CHG_TERM default="00M01"></RATE_CHG_TERM>
+    <GET_RATE_CODE></GET_RATE_CODE>
+    <RATE_RULE_SYS default="0"></RATE_RULE_SYS>
+    <RATE_NO sourcecolumn="RATE_NO"></RATE_NO>
+    <RULE_CAL_TYPE default="1"></RULE_CAL_TYPE>
+    <PRDT_FLT_TYPE default="2"></PRDT_FLT_TYPE>
+    <RATIO default="0"></RATIO>
+  </PrdtDe>
+  
+</root>

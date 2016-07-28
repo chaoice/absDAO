@@ -1,0 +1,118 @@
+﻿<Window x:Class="DataMigration.trade.DE.DEInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DEInfo" Height="600" Width="800" FontSize="20">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="25"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Height" Value="25"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <TabControl>
+            <TabItem Header="基本信息">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock  Grid.Row="0" Grid.Column="0">产品号</TextBlock>
+                    <TextBox   Grid.Row="0" Grid.Column="2" Text="{Binding Path=prdt_no}" ></TextBox>
+                    <TextBlock  Grid.Row="0" Grid.Column="4">产品分类</TextBlock>
+                    <TextBox  Grid.Row="0" Grid.Column="6" Text="{Binding Path=Cbase.prdt_type}"></TextBox>
+                    <TextBlock  Grid.Row="1" Grid.Column="0">产品类型</TextBlock>
+                    <TextBox  Grid.Row="1" Grid.Column="2" Text="{Binding Path=Cbase.prdt_knd}"></TextBox>
+                    <TextBlock  Grid.Row="1" Grid.Column="4">生效日期</TextBlock>
+                    <TextBox  Grid.Row="1" Grid.Column="6" Text="{Binding Path=Cbase.beg_date}"></TextBox>
+                    <TextBlock  Grid.Row="2" Grid.Column="0">失效日期</TextBlock>
+                    <TextBox  Grid.Row="2" Grid.Column="2" Text="{Binding Path=Cbase.end_date}"></TextBox>
+                    <TextBlock  Grid.Row="2" Grid.Column="4">客户类型</TextBlock>
+                    <TextBox  Grid.Row="2" Grid.Column="6" Text="{Binding Path=Cbase.cif_type}"></TextBox>
+                    <TextBlock  Grid.Row="3" Grid.Column="0">存期类型</TextBlock>
+                    <TextBox  Grid.Row="3" Grid.Column="2" Text="{Binding Path=Cbase.term_type}"></TextBox>
+                    <TextBlock  Grid.Row="3" Grid.Column="4">存期</TextBlock>
+                    <TextBox  Grid.Row="3" Grid.Column="6" Text="{Binding Path=Cbase.term}"></TextBox>
+                    <TextBlock  Grid.Row="4" Grid.Column="0">产品状态</TextBlock>
+                    <TextBox  Grid.Row="4" Grid.Column="2" Text="{Binding Path=Cbase.prdt_sts}"></TextBox>
+                    <TextBlock  Grid.Row="4" Grid.Column="4">产品标识</TextBlock>
+                    <TextBox  Grid.Row="4" Grid.Column="6" Text="{Binding Path=Cbase.prdt_ind}"></TextBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="利率信息">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition ></RowDefinition>
+                       
+
+                    </Grid.RowDefinitions>
+                    <TextBlock  Grid.Row="0" Grid.Column="0">利率类型</TextBlock>
+                    <TextBox  Grid.Row="0" Grid.Column="2" Text="{Binding Path=Crate.rate_type}"></TextBox>
+                    <TextBlock  Grid.Row="0" Grid.Column="4">利率调整方式</TextBlock>
+                    <TextBox  Grid.Row="0" Grid.Column="6" Text="{Binding Path=Crate.rate_chg_type}"></TextBox>
+                    <TextBlock  Grid.Row="1" Grid.Column="0">利率调整周期</TextBlock>
+                    <TextBox  Grid.Row="1" Grid.Column="2" Text="{Binding Path=Crate.rate_chg_term}"></TextBox>
+                    <TextBlock  Grid.Row="1" Grid.Column="4">利率适用系统</TextBlock>
+                    <TextBox  Grid.Row="1" Grid.Column="6" Text="{Binding Path=Crate.rate_rule_sys}"></TextBox>
+                    <TextBlock  Grid.Row="2" Grid.Column="0">利率代码</TextBlock>
+                    <TextBox  Grid.Row="2" Grid.Column="2" Text="{Binding Path=Crate.rate_no}"></TextBox>
+                    <TextBlock  Grid.Row="2" Grid.Column="4">多条规则处理方式</TextBlock>
+                    <TextBox  Grid.Row="2" Grid.Column="6" Text="{Binding Path=Crate.rule_cal_type}"></TextBox>
+                    <TextBlock  Grid.Row="3" Grid.Column="0">利率浮动类型</TextBlock>
+                    <TextBox  Grid.Row="3" Grid.Column="2" Text="{Binding Path=Crate.prdt_flt_type}"></TextBox>
+                    <TextBlock  Grid.Row="3" Grid.Column="4">利率浮动值</TextBlock>
+                    <TextBox  Grid.Row="3" Grid.Column="6" Text="{Binding Path=Crate.ratio}"></TextBox>
+                   
+                </Grid>
+            </TabItem>
+                <TabItem Header="核算信息"></TabItem>
+                <TabItem Header="销户设置"></TabItem>
+                <TabItem Header="存入信息"></TabItem>
+                <TabItem Header="支取信息"></TabItem>
+                <TabItem Header="计息信息"></TabItem>
+                <TabItem Header="到期信息"></TabItem>
+                <TabItem Header="透支信息"></TabItem>
+                <TabItem Header="开户信息"></TabItem>
+                <TabItem Header="计提信息"></TabItem>
+                <TabItem Header="利息税信息"></TabItem>
+                
+        </TabControl>
+            <Button Name="Btn_save" Click="Btn_save_Click">保存</Button>
+            <Button Name="Btn_restore" Click="Btn_restore_Click">还原</Button>
+            <Button Name="Btn_close" Click="Btn_close_Click">关闭</Button>
+        </StackPanel>
+    </Grid>
+</Window>
