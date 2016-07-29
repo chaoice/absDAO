@@ -13,8 +13,41 @@ using System.Threading.Tasks;
 namespace DataMigration.Functions
 {
     
-    public static  class CommonFunc
+    public   class CommonFunc
     {
+        /// <summary>
+        /// 取prdt_parm里group_no=de_base_parm，里rule="minint(1000,1999,PRDT_PARM,PRDT_NO，GROUP_NO,DE_BASE_PARM)"
+        /// </summary>
+        /// <param name="start_no"></param>
+        /// <param name="end_no"></param>
+        /// <param name="table_name"></param>
+        /// <param name="column_name"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public static int minint(string parm)
+            //public static int minint(int start_no,int end_no, string table_name, string column_name,Dictionary<string,string> conditions=null)
+        {
+            string[] parms=parm.Split(',');
+            int start_no = Int32.Parse(parms[0]);
+            int end_no = Int32.Parse(parms[1]);
+            string table_name = parms[2];
+            string column_name = parms[3];
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            for (int i = 4; i < parms.Count(); i+=2)
+            {
+                conditions.Add(parms[i], parms[i + 1]);
+            }
+            var target=AbsDAOIMP.GetDaoInstance().GetMultiData("newdb",table_name, conditions);
+            for(int  i = start_no;i<=end_no;i++)
+            {
+                if (!target.Exists(x => Int32.Parse(((IDictionary<string, object>)x)[table_name].ToString()) == i))
+                {
+                    return i;
+                }
+            }
+            return -1;
+
+        }
         /// <summary>
         /// 扩展list<t> 方法，集合中查找并替换为新对象。
         /// </summary>
@@ -86,7 +119,12 @@ namespace DataMigration.Functions
                 if (!string.IsNullOrEmpty(cr.rule))
                 {
                     //使用转换规则
-
+                    string[] parms = cr.rule.Split(new char[] { '(', ')' });
+                    Assembly sb=Assembly.GetExecutingAssembly();
+                    var obj=sb.CreateInstance("DataMigration.Functions.CommonFunc");
+                    object[] paras = new object[] { parms[1] };
+                    var ind=typeof(CommonFunc).GetMethod(parms[0]).Invoke(obj, paras);
+                    
                 }
 
             }
