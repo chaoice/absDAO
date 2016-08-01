@@ -2,7 +2,7 @@
 <root>
   <PrdtDe maintable="DD_PARM" type="menu">
     <!--DE_BASE_PARM-->
-    <PRDT_NO propertypath="prdt_no" sourcecolumn="PRDT_NO" rule="auto(1000)"></PRDT_NO>
+    <PRDT_NO propertypath="prdt_no" sourcecolumn="PRDT_NO" rule="minint(1000,1999,PRDT_PARM,PRDT_NO,GROUP_NO,DE_BASE_PARM)"></PRDT_NO>
     <PRDT_TYPE propertypath="Cbase.prdt_type" default="1"></PRDT_TYPE>
     <PRDT_KND ></PRDT_KND>
     <BEG_DATE sourcetable="DD_PARM" sourcecolumn="BEG_DATE" sourcekey="PRDT_NO" mainkey="PRDT_NO" ></BEG_DATE>

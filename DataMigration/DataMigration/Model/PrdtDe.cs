@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 
 namespace DataMigration.Model
 {
+    public interface ICRUD
+    {
+        public void ADD(object obj);
+        public void Delete(object obj);
+       
+
+    }
     [Serializable]
     public class Debase :ModelBase, INotifyPropertyChanged
     {

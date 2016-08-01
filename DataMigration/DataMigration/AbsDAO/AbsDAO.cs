@@ -87,6 +87,47 @@ namespace DataMigration.AbsDAO
             }
             return sReturn;
         }
+        /// <summary>
+        /// 插入表table_name
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="table_name"></param>
+        /// <param name="data"></param>
+        public void SqlAdd(string database,string table_name,Dictionary<string,string> data)
+        {
+
+            string sqlstring="insert into "+table_name+" ",
+                sqlkeys=string.Empty,
+                sqlvalues=string.Empty;
+            foreach(KeyValuePair<string,string> kvp in data)
+            {
+                sqlkeys+=kvp.Key+",";
+                sqlvalues+="'"+kvp.Value+"'"+",";
+            }
+            sqlkeys.TrimEnd(',');
+            sqlvalues.TrimEnd(',');
+            sqlstring=string.Format("{0}({1}) values ({2})");
+
+            SqlConnectSuit.GetConnect(database).Execute(sqlstring);
+        }
+        /// <summary>
+        /// 删除表table_name条件是data
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="table_name"></param>
+        /// <param name="data"></param>
+        public void SqlDel(string database, string table_name, Dictionary<string, string> data)
+        {
+
+            string sqlstring = "delete from " + table_name + " where ";
+            foreach (KeyValuePair<string, string> kvp in data)
+            {
+                sqlstring+=kvp.Key+"='"+kvp.Value+"' and";
+            }
+            sqlstring=sqlstring.Take(sqlstring.Count() - 4).ToString();
+
+            SqlConnectSuit.GetConnect(database).Execute(sqlstring);
+        }
     }
     public class RawData
     {

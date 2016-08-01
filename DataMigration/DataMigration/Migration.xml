@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
   <PrdtDe maintable="DD_PARM" type="menu">
+    <!--PRDT_PARM -->
+    <FILLER sourcecolumn="TITLE"></FILLER>
     <!--DE_BASE_PARM-->
     <PRDT_NO propertypath="prdt_no" sourcecolumn="PRDT_NO" rule="minint(1000,1999,PRDT_PARM,PRDT_NO,GROUP_NO,DE_BASE_PARM)"></PRDT_NO>
     <PRDT_TYPE propertypath="Cbase.prdt_type" default="1"></PRDT_TYPE>

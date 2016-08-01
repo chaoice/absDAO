@@ -12,9 +12,100 @@ using System.Threading.Tasks;
 
 namespace DataMigration.Functions
 {
-    
-    public   class CommonFunc
+    public static class DataBus
     {
+        private static Dictionary<string, object> _data = new Dictionary<string, object>();
+        public static object GetData(string key)
+        {
+            if (_data.Keys.Contains(key))
+            {
+                return _data[key];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public static void SetData(string key, object obj)
+        {
+            if (_data.Keys.Contains(key))
+            {
+                 _data[key]=obj;
+            }
+            else
+            {
+                _data.Add(key, obj);
+            }
+        }
+        public static void RemoveData(string key)
+        {
+            if (_data.Keys.Contains(key))
+            {
+                _data.Remove(key);
+            }
+        }
+    }
+    
+    public    static class CommonFunc
+    {
+        public static string minstring(string table_name,string column_name,string start,string end)
+        {
+            List<dynamic> data = AbsDAOIMP.GetDaoInstance().GetMultiData("newdb", table_name, null);
+            string cur_no = start;
+            long i=sxtolong(start);
+            for (; i < sxtolong(end); i++)
+            {
+                if (!data.Exists(x => sxtolong(((IDictionary<string, string>)x)[column_name]).Equals(i)))
+                {
+                    break;
+                }
+            }
+            return doubletosx(i, end.Length);
+
+        }
+        public static long sxtolong(string str)
+        {
+            long dr = 0;
+            int i=0;
+            foreach (char cr in str.ToArray())
+            {
+                if (cr > 57)
+                {
+                    dr += (long)((cr - 55) * Math.Pow(36, i));
+                }
+                else
+                {
+                    dr+=(long)((cr-48)* Math.Pow(36, i));
+                }
+                i++;
+            }
+            return dr;
+        }
+        public static string doubletosx(long data,int strlen)
+        {
+            string sReturn=string.Empty;
+            int i = 0;
+            char bitchar='0';
+            long tmp = data;
+            long bitdata = 0;
+            while (data != 0)
+            {
+                bitdata = data % 36;
+                data = data / 36;
+                if (bitdata > 10)
+                {
+                    bitchar = (char)(bitdata + 55);
+                }
+                else
+                {
+                    bitchar = (char)(bitdata + 48);
+                }
+                sReturn = bitchar + sReturn;
+                sReturn.PadLeft(strlen, '0');
+            }
+            return sReturn;
+        }
+        
         /// <summary>
         /// 取prdt_parm里group_no=de_base_parm，里rule="minint(1000,1999,PRDT_PARM,PRDT_NO，GROUP_NO,DE_BASE_PARM)"
         /// </summary>
@@ -24,7 +115,7 @@ namespace DataMigration.Functions
         /// <param name="column_name"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public static int minint(string parm)
+        public static int minint(string parm )
             //public static int minint(int start_no,int end_no, string table_name, string column_name,Dictionary<string,string> conditions=null)
         {
             string[] parms=parm.Split(',');
@@ -32,6 +123,8 @@ namespace DataMigration.Functions
             int end_no = Int32.Parse(parms[1]);
             string table_name = parms[2];
             string column_name = parms[3];
+            List<int> listuse = (List<int>)DataBus.GetData(column_name) == null ? new List<int>() : (List<int>)DataBus.GetData(column_name);
+           
             Dictionary<string, string> conditions = new Dictionary<string, string>();
             for (int i = 4; i < parms.Count(); i+=2)
             {
@@ -40,8 +133,9 @@ namespace DataMigration.Functions
             var target=AbsDAOIMP.GetDaoInstance().GetMultiData("newdb",table_name, conditions);
             for(int  i = start_no;i<=end_no;i++)
             {
-                if (!target.Exists(x => Int32.Parse(((IDictionary<string, object>)x)[table_name].ToString()) == i))
+                if (!target.Exists(x => Int32.Parse(((IDictionary<string, object>)x)[column_name].ToString()) == i)&&!listuse.Contains(i))
                 {
+                    
                     return i;
                 }
             }
@@ -121,10 +215,8 @@ namespace DataMigration.Functions
                     //使用转换规则
                     string[] parms = cr.rule.Split(new char[] { '(', ')' });
                     Assembly sb=Assembly.GetExecutingAssembly();
-                    var obj=sb.CreateInstance("DataMigration.Functions.CommonFunc");
                     object[] paras = new object[] { parms[1] };
-                    var ind=typeof(CommonFunc).GetMethod(parms[0]).Invoke(obj, paras);
-                    
+                    rString=typeof(CommonFunc).GetMethod(parms[0]).Invoke(typeof(CommonFunc), paras).ToString();
                 }
 
             }
@@ -169,9 +261,12 @@ namespace DataMigration.Functions
             if (string.IsNullOrEmpty(Sre_code))
             {
                 //没有找到需要新增rate_rule_def prdt_ratectl_parm。
+               
                 //查找rate_rule_code最大可用值，并赋值给Sre_code。
+                Sre_code = minstring("RATE_RULE_DEF", "RATE_RULE_CODE", "0000", "ZZZZ");
                 //插入rate_rule_def与prdt_ratectl_parm。
-                
+                adi.SqlAdd("newdb","RATE_RULE_DEF",new Dictionary<string,string>{{"RATE_RULE_CODE",Sre_code},{"RATE_RULE_MO","利率"+rate_no+rrs.ToString()+rct+pft+ratio}，
+                {"RATE_RULE_SYS",rrs},{"RATE_RULE_KEYS","ALLFLAG"},{"BEG_DATE","19010101"},{"END_DATE","20990101"}});
             }
             return Sre_code;
         }

@@ -26,7 +26,7 @@ namespace DataMigration
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, ICRUD
     {
         private AbsDAOIMP adi;
         private BindingList<DeProduct> LPrdtDe;
@@ -46,14 +46,20 @@ namespace DataMigration
             LPrdtDe.Clear();
             RuleManager rm = RuleManager.GetRuleManagerInstance();
             Rule rule=rm.GetRuleByName("PrdtDe");
+            List<int> prdtuse = new List<int>();
             if (rule != null)
             {
+                
                 List<dynamic> prdtList= adi.GetMultiData("olddb",rule.KeyTable);
                 foreach (IDictionary<string, object> singleprdt in prdtList)
                 {
                     DeProduct pd = new DeProduct();
                     
                     pd.prdt_no = rule.getstringbyrule("PRDT_NO", singleprdt);
+                    prdtuse.Add(Int32.Parse(pd.prdt_no));
+                    //minint转换函数会使用到。设置为字段名称
+                    DataBus.SetData("PRDT_NO", prdtuse);
+                    pd.filler = rule.getstringbyrule("FILLER", singleprdt); 
                     //de_Base_parm
                     pd.Cbase.prdt_type = rule.getstringbyrule("PRDT_TYPE", singleprdt); 
                     pd.Cbase.prdt_knd = rule.getstringbyrule("PRDT_KND", singleprdt);
@@ -75,6 +81,7 @@ namespace DataMigration
                     pd.Crate.rule_cal_type = rule.getstringbyrule("RULE_CAL_TYPE", singleprdt);
                     LPrdtDe.Add(pd);
                 }
+                DataBus.RemoveData("PRDT_NO");
             }
             dg_main.ItemsSource = LPrdtDe;
         }
@@ -90,9 +97,46 @@ namespace DataMigration
 
         private void Btn_sync_Click(object sender, RoutedEventArgs e)
         {
-            //循环现有产品
+            //查询现有的产品名称，如果相同产品名称的存在提示是否继续移植。
+            List<dynamic> existprdt = adi.GetMultiData("newdb", "prdt_parm", new Dictionary<string, string> { { "GROUP_NO", "DE_BASE_PARM" } });
 
+            //循环现有产品
+            foreach (DeProduct dp in LPrdtDe)
+            {
+                if (existprdt.Exists(x => x.FILLER.Equals(dp.filler)))
+                {
+                   MessageBoxResult mbr= MessageBox.Show("该产品" + dp.filler + "已经存在，是否继续移植", "错误",MessageBoxButton.YesNo,MessageBoxImage.Information);
+                   if (mbr == MessageBoxResult.No)
+                   {
+                       continue;
+                   }
+                   //删除现有产品配置
+                   
+                   
+                }
+                //增加新产品
+
+            }
         }
-       
+        
+
+
+
+        public void ADD(DeProduct dp)
+        {
+            //de_Base_parm
+            //de_rate_parm
+            //prdt_parm
+            adi.SqlAdd("newdb","PRDT_PARM",new Dictionary<string,string>{{"PRDT_NO",dp.prdt_no},{"GROUP_NO","DE_BASE_PARM"},{"GROUP_MO","基本属性"},
+            {"BEG_DATE",dp.Cbase._beg_date.ToString()},{"END_DATE",dp.Cbase.end_date.ToString()},
+            {"STS","0"},{"FILLER",dp.filler}});
+            
+           
+        }
+
+        public void Delete(DeProduct dp)
+        {
+            
+        }
     }
 }
