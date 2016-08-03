@@ -265,8 +265,8 @@ namespace DataMigration.Functions
                 //查找rate_rule_code最大可用值，并赋值给Sre_code。
                 Sre_code = minstring("RATE_RULE_DEF", "RATE_RULE_CODE", "0000", "ZZZZ");
                 //插入rate_rule_def与prdt_ratectl_parm。
-                adi.SqlAdd("newdb","RATE_RULE_DEF",new Dictionary<string,string>{{"RATE_RULE_CODE",Sre_code},{"RATE_RULE_MO","利率"+rate_no+rrs.ToString()+rct+pft+ratio}，
-                {"RATE_RULE_SYS",rrs},{"RATE_RULE_KEYS","ALLFLAG"},{"BEG_DATE","19010101"},{"END_DATE","20990101"}});
+                //adi.SqlAdd("newdb","RATE_RULE_DEF",new Dictionary<string,string>{{"RATE_RULE_CODE",Sre_code},{"RATE_RULE_MO","利率"+rate_no+rrs.ToString()+rct+pft+ratio}，
+                //{"RATE_RULE_SYS",rrs},{"RATE_RULE_KEYS","ALLFLAG"},{"BEG_DATE","19010101"},{"END_DATE","20990101"}});
             }
             return Sre_code;
         }

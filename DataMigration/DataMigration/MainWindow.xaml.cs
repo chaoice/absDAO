@@ -122,21 +122,31 @@ namespace DataMigration
 
 
 
-        public void ADD(DeProduct dp)
-        {
-            //de_Base_parm
-            //de_rate_parm
-            //prdt_parm
-            adi.SqlAdd("newdb","PRDT_PARM",new Dictionary<string,string>{{"PRDT_NO",dp.prdt_no},{"GROUP_NO","DE_BASE_PARM"},{"GROUP_MO","基本属性"},
-            {"BEG_DATE",dp.Cbase._beg_date.ToString()},{"END_DATE",dp.Cbase.end_date.ToString()},
-            {"STS","0"},{"FILLER",dp.filler}});
+        //void ADD(DeProduct dp)
+        //{
+        //    //de_Base_parm
+        //    //de_rate_parm
+        //    //prdt_parm
+        //    adi.SqlAdd("newdb","PRDT_PARM",new Dictionary<string,string>{{"PRDT_NO",dp.prdt_no},{"GROUP_NO","DE_BASE_PARM"},{"GROUP_MO","基本属性"},
+        //    {"BEG_DATE",dp.Cbase._beg_date.ToString()},{"END_DATE",dp.Cbase.end_date.ToString()},
+        //    {"STS","0"},{"FILLER",dp.filler}});
             
            
+        //}
+
+        //public void Delete(DeProduct dp)
+        //{
+            
+        //}
+
+        public void ADD(object obj)
+        {
+            throw new NotImplementedException();
         }
 
-        public void Delete(DeProduct dp)
+        public void Delete(object obj)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

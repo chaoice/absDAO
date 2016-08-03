@@ -11,8 +11,8 @@ namespace DataMigration.Model
 {
     public interface ICRUD
     {
-        public void ADD(object obj);
-        public void Delete(object obj);
+         void ADD(object obj);
+        void Delete(object obj);
        
 
     }
